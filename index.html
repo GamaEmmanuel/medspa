@@ -9,5 +9,24 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCsMfyVms-oT10wrvxsIgLkxqds5XkUFOk",
+    authDomain: "medspa-c3d9c.firebaseapp.com",
+    projectId: "medspa-c3d9c",
+    storageBucket: "medspa-c3d9c.firebasestorage.app",
+    messagingSenderId: "842864533624",
+    appId: "1:842864533624:web:024c76675c292ff6c10d8d"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
   </body>
 </html>

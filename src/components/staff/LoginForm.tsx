@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, Mail } from 'lucide-react';
+import { Lock, Mail, ArrowLeft } from 'lucide-react';
 
 interface LoginFormProps {
   onLogin: (email: string, password: string, keepSignedIn: boolean) => void;
@@ -20,7 +20,14 @@ export function LoginForm({ onLogin, error }: LoginFormProps) {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <button
+            onClick={() => window.location.href = '/'}
+            className="group mb-8 inline-flex items-center text-sm font-medium text-teal-600 hover:text-teal-500"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Home
+          </button>
+          <h2 className="text-center text-3xl font-extrabold text-gray-900">
             Staff Portal Login
           </h2>
         </div>

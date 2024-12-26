@@ -1,0 +1,1 @@
+export { initializeFirebaseCollections } from './initializeFirebase';
