@@ -1,21 +1,30 @@
-import { orderBy } from 'firebase/firestore';
-import { useFirestore } from './useFirestore';
+import { useState } from 'react';
+import { services as initialServices } from '../data/services';
 import type { Service } from '../types';
 
 export function useServices() {
-  const {
-    data: services,
-    loading,
-    error,
-    add: addService,
-    update: updateService,
-    remove: deleteService
-  } = useFirestore<Service>('services', [orderBy('createdAt')]);
+  const [services, setServices] = useState<Service[]>(initialServices);
+
+  const addService = (service: Omit<Service, 'id'>) => {
+    const newService = {
+      ...service,
+      id: `s${services.length + 1}`
+    };
+    setServices([...services, newService]);
+  };
+
+  const updateService = (updatedService: Service) => {
+    setServices(services.map(service => 
+      service.id === updatedService.id ? updatedService : service
+    ));
+  };
+
+  const deleteService = (id: string) => {
+    setServices(services.filter(service => service.id !== id));
+  };
 
   return {
     services,
-    loading,
-    error,
     addService,
     updateService,
     deleteService

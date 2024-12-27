@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { LoginForm } from '../components/staff/LoginForm';
 import { DashboardHeader } from '../components/staff/DashboardHeader';
 import { Navigation } from '../components/staff/Navigation';
@@ -13,7 +13,31 @@ import { ROUTES } from '../lib/constants';
 import { saveAuthToStorage, clearAuthFromStorage, getStoredAuth } from '../lib/utils/auth';
 import type { Staff, AuthState } from '../types/staff';
 
+function StaffPortalContent({ user, onLogout }: { user: Staff; onLogout: () => void }) {
+  return (
+    <div className="min-h-screen bg-gray-100">
+      <DashboardHeader user={user} onLogout={onLogout} />
+      <Navigation />
+      
+      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div className="px-4 py-6 sm:px-0">
+          <Routes>
+            <Route path="home" element={<DashboardPage />} />
+            <Route path="calendar" element={<AppointmentsPage />} />
+            <Route path="sales" element={<RevenuePage />} />
+            <Route path="clients" element={<ClientsPage />} />
+            <Route path="services" element={<ServicesPage />} />
+            <Route path="/" element={<Navigate to="home" replace />} />
+            <Route path="*" element={<Navigate to="home" replace />} />
+          </Routes>
+        </div>
+      </main>
+    </div>
+  );
+}
+
 export function StaffPortal() {
+  const navigate = useNavigate();
   const [auth, setAuth] = useState<AuthState>({
     isAuthenticated: false,
     user: null,
@@ -33,7 +57,7 @@ export function StaffPortal() {
   const handleLogin = (email: string, password: string, keepSignedIn: boolean) => {
     const user = staffMembers.find(staff => staff.email === email);
     
-    if (user && password === 'password') { // In production, use proper password hashing
+    if (user && password === 'password') {
       const newAuth = {
         isAuthenticated: true,
         user,
@@ -59,6 +83,7 @@ export function StaffPortal() {
       loading: false,
       error: null
     });
+    navigate(ROUTES.HOME);
   };
 
   if (auth.loading) {
@@ -69,29 +94,9 @@ export function StaffPortal() {
     );
   }
 
-  if (!auth.isAuthenticated) {
+  if (!auth.isAuthenticated || !auth.user) {
     return <LoginForm onLogin={handleLogin} error={auth.error || undefined} />;
   }
 
-  return (
-    <BrowserRouter>
-      <div className="min-h-screen bg-gray-100">
-        <DashboardHeader user={auth.user as Staff} onLogout={handleLogout} />
-        <Navigation />
-        
-        <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <Routes>
-              <Route path={ROUTES.STAFF.DASHBOARD} element={<DashboardPage />} />
-              <Route path={ROUTES.STAFF.APPOINTMENTS} element={<AppointmentsPage />} />
-              <Route path={ROUTES.STAFF.REVENUE} element={<RevenuePage />} />
-              <Route path={ROUTES.STAFF.CLIENTS} element={<ClientsPage />} />
-              <Route path={ROUTES.STAFF.SERVICES} element={<ServicesPage />} />
-              <Route path={ROUTES.STAFF.ROOT} element={<Navigate to={ROUTES.STAFF.DASHBOARD} replace />} />
-            </Routes>
-          </div>
-        </main>
-      </div>
-    </BrowserRouter>
-  );
+  return <StaffPortalContent user={auth.user} onLogout={handleLogout} />;
 }

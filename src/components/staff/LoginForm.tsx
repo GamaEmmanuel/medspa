@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Lock, Mail, ArrowLeft } from 'lucide-react';
+import { Lock, Mail, Home } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../../lib/constants';
 
 interface LoginFormProps {
   onLogin: (email: string, password: string, keepSignedIn: boolean) => void;
@@ -7,6 +9,7 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onLogin, error }: LoginFormProps) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [keepSignedIn, setKeepSignedIn] = useState(false);
@@ -21,10 +24,10 @@ export function LoginForm({ onLogin, error }: LoginFormProps) {
       <div className="max-w-md w-full space-y-8">
         <div>
           <button
-            onClick={() => window.location.href = '/'}
-            className="group mb-8 inline-flex items-center text-sm font-medium text-teal-600 hover:text-teal-500"
+            onClick={() => navigate(ROUTES.HOME)}
+            className="group mb-8 flex items-center text-teal-600 hover:text-teal-700"
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
+            <Home className="h-5 w-5 mr-2" />
             Back to Home
           </button>
           <h2 className="text-center text-3xl font-extrabold text-gray-900">

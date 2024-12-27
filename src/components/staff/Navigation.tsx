@@ -10,17 +10,17 @@ export function Navigation() {
     { 
       path: ROUTES.STAFF.DASHBOARD, 
       icon: LayoutDashboard, 
-      label: 'Dashboard' 
+      label: 'Home' 
     },
     { 
       path: ROUTES.STAFF.APPOINTMENTS, 
       icon: Calendar, 
-      label: 'Appointments' 
+      label: 'Calendar' 
     },
     {
       path: ROUTES.STAFF.REVENUE,
       icon: DollarSign,
-      label: 'Revenue'
+      label: 'Sales'
     },
     {
       path: ROUTES.STAFF.CLIENTS,

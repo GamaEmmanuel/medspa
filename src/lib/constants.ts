@@ -3,9 +3,9 @@ export const ROUTES = {
   HOME: '/',
   STAFF: {
     ROOT: '/staff',
-    DASHBOARD: '/staff/dashboard',
-    APPOINTMENTS: '/staff/appointments',
-    REVENUE: '/staff/revenue',
+    DASHBOARD: '/staff/home',
+    APPOINTMENTS: '/staff/calendar',
+    REVENUE: '/staff/sales',
     CLIENTS: '/staff/clients',
     SERVICES: '/staff/services'
   },
